@@ -22,6 +22,8 @@ def create_grid():
 create_grid()
 #Create holding list for X and O choices
 choice_list = ['X','O']
+#List to hold r key for rolling
+roll_list = ['r']
 
 class Player:
 
@@ -47,24 +49,26 @@ class Player:
                 print(player2 + ' got a ' + str(player2_roll))
 
         print('Whoever rolls the highest gets to play first and pick X or O')
+
         roll1 = input(player1 + ' enter r to roll: ')
+        while roll1 not in roll_list:
+            roll1 = input(player2 + ' enter r to roll: ')
+
         if roll1 == 'r':
-            #player1_roll = random.randint(1,6)
-            player1_roll = 5
+            player1_roll = random.randint(1,6)
             print(player1 + ' got a ' + str(player1_roll))
 
         roll2 = input(player2 + ' enter r to roll: ')
+        while roll2 not in roll_list:
+            roll2 = input(player2 + ' enter r to roll: ')
 
         if roll2 == 'r':
-            #player2_roll = random.randint(1,6)
-            player2_roll = 5
+            player2_roll = random.randint(1,6)
             print(player2 + ' got a ' + str(player2_roll))
         
 
-        #Reroll if same value
-
-
         print('')
+
         def roll_win(player1_roll,player2_roll):
             if player1_roll > player2_roll:
                 print(player1 + ' is going first')
@@ -90,7 +94,6 @@ class Player:
                     self.noughts = 1
             elif player1_roll == player2_roll:
                 reroll()
-                player1_roll += 1
                 roll_win(player1_roll,player2_roll)
 
         roll_win(player1_roll,player2_roll)
