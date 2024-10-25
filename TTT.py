@@ -33,29 +33,67 @@ class Player:
         self.player2 = player2
 
     def player_order(self,player1,player2):
+        def reroll():
+            print('Both players rolled the same number so roll again!')
+            roll1 = input(player1 + ' enter r to roll: ')
+            if roll1 == 'r':
+                player1_roll = random.randint(1,6)
+                print(player1 + ' got a ' + str(player1_roll))
+
+            roll2 = input(player2 + ' enter r to roll: ')
+
+            if roll2 == 'r':
+                player2_roll = random.randint(1,6)
+                print(player2 + ' got a ' + str(player2_roll))
+
         print('Whoever rolls the highest gets to play first and pick X or O')
-        print('')
         roll1 = input(player1 + ' enter r to roll: ')
         if roll1 == 'r':
-            player1_roll = random.randint(1,6)
+            #player1_roll = random.randint(1,6)
+            player1_roll = 5
             print(player1 + ' got a ' + str(player1_roll))
 
         roll2 = input(player2 + ' enter r to roll: ')
 
         if roll2 == 'r':
-            player2_roll = random.randint(1,6)
+            #player2_roll = random.randint(1,6)
+            player2_roll = 5
             print(player2 + ' got a ' + str(player2_roll))
+        
+
+        #Reroll if same value
+
 
         print('')
+        def roll_win(player1_roll,player2_roll):
+            if player1_roll > player2_roll:
+                print(player1 + ' is going first')
+                choice = input("Do you want X or O(In caps please): ")
+                while choice not in choice_list:
+                    choice = input("Do you want X or O(In caps please): ")
+                if choice == 'X':
+                    self.crosses = 1
+                    self.noughts = 2
+                elif choice == 'O':
+                    self.crosses = 2
+                    self.noughts = 1
+            elif player1_roll < player2_roll:
+                print(player2 + ' is going first')
+                choice = input("Do you want X or O(In caps please): ")
+                while choice not in choice_list:
+                    choice = input("Do you want X or O(In caps please): ")
+                if choice == 'X':
+                    self.crosses = 1
+                    self.noughts = 2
+                elif choice == 'O':
+                    self.crosses = 2
+                    self.noughts = 1
+            elif player1_roll == player2_roll:
+                reroll()
+                player1_roll += 1
+                roll_win(player1_roll,player2_roll)
 
-        if player1_roll > player2_roll:
-            print(player1 + ' is going first')
-            #choice = input("Do you want X or O(In caps please): ")
-            #if choice == 'X':
-                #self.player1 = x
-                #choice_list.remove(X)
-        else:
-            print(player2 + ' is going first')
+        roll_win(player1_roll,player2_roll)
     
 
 
@@ -65,3 +103,11 @@ player = Player()
 player1 = player.player1
 player2 = player.player2
 player.player_order(player1,player2)
+if player.crosses == 1:
+    first = player.crosses
+    second = player.noughts
+elif player.noughts == 1:
+    first = player.noughts
+    second = player.crosses
+#print(player.noughts)
+#print(player.crosses)
