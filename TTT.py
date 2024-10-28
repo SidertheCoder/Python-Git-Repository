@@ -148,12 +148,18 @@ def play_XorO(XandO):
     while win_check(grid_Board) ==  False:
         print(current + '\'s Turn')
         choice = input('Where would you like to pick on the board:\n')
-        print(choice)
+        #print(choice)
         Choice = choice.upper()
-        print(Choice)
+        while Choice not in grid_Board.keys():
+            choice = input('Where would you like to pick on the board:\n')
+            Choice = choice.upper()
+        #print(Choice)
         while Choice in filled_spaces:
             choice = input('That space is already filled, where would you like to pick on the board:\n')
             Choice = choice.upper()
+            while Choice not in grid_Board.keys():
+                choice = input('Where would you like to pick on the board:\n')
+                Choice = choice.upper()
         filled_spaces.append(Choice)
         #print(filled_spaces)
         grid_Board[Choice] = XandO[current]
@@ -164,6 +170,19 @@ def play_XorO(XandO):
         else:
             current = player_order[0]
         print('')
+        #Check for tie
+        #print(grid_Board.values())
+        if [' '] not in grid_Board.values() and win_check(grid_Board) ==  False:
+            tie = True
+        else:
+            tie = False
+        if tie == True:
+            if current == player_order[0]:
+                current = player_order[1]
+            else:
+                current = player_order[0]
+            return ('It\'s a tie try again!')
+
     if current == player_order[0]:
         current = player_order[1]
     else:
