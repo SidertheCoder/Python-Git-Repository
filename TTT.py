@@ -38,6 +38,7 @@ class Player:
         #Ask each player for their name
         player1 = input('Input name for player 1.\n')
         player2 = input('Input name for player 2.\n')
+        print('')
         self.player1 = player1
         self.player2 = player2
 
@@ -62,6 +63,7 @@ class Player:
             print(player2 + ' got a ' + str(player2_roll))
         
         def reroll():
+            print('')
             print('Both players rolled the same number so roll again!')
             roll1 = input(player1 + ' enter r to roll: ')
             while roll1 not in roll_list:
@@ -121,10 +123,57 @@ class Player:
                     print('error in code')
 
         roll_win(player1_roll,player2_roll)
+    
+def win_check(grid_Board):
+    winning_combinations = [['A1', 'A2', 'A3'],['B1', 'B2', 'B3'],['C1', 'C2', 'C3'],['A1', 'B1', 'C1'],['A2', 'B2', 'C2'],['A3', 'B3', 'C3'],['A1', 'B2', 'C3'],['A3', 'B2', 'C1']]
+    
+    win = False
 
-#def play_XorO(XandO):
-#    create_grid()
-#    choice = input('Where would you like to pick on the board:\n')
+    for combo in winning_combinations:
+        
+        #print(grid_Board[combo[0]] + grid_Board[combo[1]] + grid_Board[combo[2]])
+        if grid_Board[combo[0]] == grid_Board[combo[1]] == grid_Board[combo[2]]:
+            if grid_Board[combo[0]] != [' '] and grid_Board[combo[1]] != [' '] and grid_Board[combo[2]] != [' ']:
+                #print('true')
+                win = True
+    return win
+
+
+
+
+def play_XorO(XandO):
+    filled_spaces = []
+    current = player_order[0]
+    #print(current)
+    while win_check(grid_Board) ==  False:
+        print(current + '\'s Turn')
+        choice = input('Where would you like to pick on the board:\n')
+        print(choice)
+        Choice = choice.upper()
+        print(Choice)
+        while Choice in filled_spaces:
+            choice = input('That space is already filled, where would you like to pick on the board:\n')
+            Choice = choice.upper()
+        filled_spaces.append(Choice)
+        #print(filled_spaces)
+        grid_Board[Choice] = XandO[current]
+        print('')
+        create_grid()
+        if current == player_order[0]:
+            current = player_order[1]
+        else:
+            current = player_order[0]
+        print('')
+    if current == player_order[0]:
+        current = player_order[1]
+    else:
+        current = player_order[0]
+    return ('The winner is ' + current + '!')
+        
+        
+    
+
+
 
     
 
@@ -143,8 +192,10 @@ elif player.noughts == 1:
     first = 'O'
     second = 'X'
 #print(player_order)
-XandO = {player_order[0]: first, player_order[1]: second}
+XandO = {player_order[0]: [first], player_order[1]: [second]}
+print('')
 create_grid()
 #print(XandO)
-#play_XorO(XandO)
+print(play_XorO(XandO))
+
 
